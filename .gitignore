@@ -1,1 +1,17 @@
 Lidar/__pycache__
+
+# Ignore python cache
+__pycache__/
+*.pyc
+*.png
+
+# Ignore large datasets (The SHAP logs are huge, don't push them to GitHub)
+Lidar/Detection/dataset/*.npy
+
+# Ignore virtual environments
+venv/
+.venv/
+
+# Ignore logs and temp files
+Lidar/tmp/
+Lidar/eval_logs/

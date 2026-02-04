@@ -17,7 +17,7 @@ class AirSimDroneEnv(AirSimEnv):
 
     def __init__(self, target_z=-20):
         super().__init__()
-        self.drone = airsim.MultirotorClient(ip="127.0.0.1",port=41451)
+        self.drone = airsim.MultirotorClient(ip="127.0.0.1",port=41453)
         self.drone.confirmConnection()
         self._setup_flight()
         build_course(self.drone)
