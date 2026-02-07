@@ -10,7 +10,7 @@ import torch
 # Initialize the environment
 env = AirSimDroneEnv()
 
-model_path = r"..\models\20260113-141301_ddpg_airsim_drone_callback\ 20260113-141301_ddpg_airsim_drone.zip"
+model_path = r"models\20260113-141301_ddpg_airsim_drone_callback\ 20260113-141301_ddpg_airsim_drone.zip"
 model = DDPG.load(model_path, env=env)
 
 
