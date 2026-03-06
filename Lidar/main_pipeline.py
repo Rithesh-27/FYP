@@ -4,11 +4,8 @@ from datetime import datetime
 import os
 
 from navigation.logger import init_logger
-from navigation.metrics import compute_metrics
 from navigation.normal_navigation import run_normal_navigation
 from navigation.attacked_navigation import run_attacked_navigation
-from navigation.visualize import plot_comparison
-from navigation.visualize_anomaly import plot_anomaly_score
 from defense.shield import SecurityShield
 from navigation.shielded_navigation import run_shielded_navigation
 import torch
@@ -43,8 +40,6 @@ rewards, collisions, successes = run_attacked_navigation(
     env, model, num_episodes=1, log_file=ATTACK_LOG
 )
 
-attacked_metrics = compute_metrics(rewards, collisions, successes)
-
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # ---------------- LOAD AGENT ----------------
@@ -71,21 +66,3 @@ print("\n🛡️ Running SHIELDED navigation (Attack + Detection + Mitigation)\n
     log_file="Logs/shielded.csv",
     episodes=5
 )
-
-plot_anomaly_score(anomaly_scores, detection_flags, threshold=0.6, episode_idx=0)
-
-shield_metrics = compute_metrics(
-    shield_rewards,
-    shield_collisions,
-    shield_successes
-)
-
-
-# ---------------- VISUALIZATION ----------------
-plot_comparison(normal_metrics, attacked_metrics)
-
-print("\n📊 FINAL COMPARISON")
-print("Nominal:", normal_metrics)
-print("Attacked:", attacked_metrics)
-print("Shielded:", shield_metrics)
-

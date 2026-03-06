@@ -44,7 +44,7 @@ class SecurityShield:
 
         self.window = deque(maxlen=10)
 
-    def detect(self, obs):
+    def detect(self, obs, return_shap=False):
         obs_t = torch.FloatTensor(obs).to(self.device)
 
         # SHAP values
@@ -57,6 +57,8 @@ class SecurityShield:
         self.window.append(signature)
 
         if len(self.window) < 10:
+            if return_shap:
+                return 0.0, shap_vals
             return 0.0
 
         window = np.array(self.window)
@@ -68,6 +70,9 @@ class SecurityShield:
             prob = self.detector(
                 torch.FloatTensor(window_scaled).to(self.device)
             ).item()
+
+        if return_shap:
+            return prob, shap_vals
 
         return prob
 
